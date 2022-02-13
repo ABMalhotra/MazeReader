@@ -1,6 +1,4 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import imageio
 
 class MazeSolver:
 
@@ -12,13 +10,14 @@ class MazeSolver:
         self.start  = self.startNode()
         self.visited= {}
         self.path   = []
+        self.SolveMaze()
 
     def startNode(self):
         '''
         Identifies starting node (RGB = 100)
         Returns (row,col) of starting node
         '''
-        startidx = np.where((im[:,:,0]==1) & (im[:,:,1]==0) & (im[:,:,2]==0)) #RGB = (1,0,0)
+        startidx = np.where((self.maze[:,:,0]==1) & (self.maze[:,:,1]==0) & (self.maze[:,:,2]==0)) #RGB = (1,0,0)
         return (startidx[0][0],startidx[1][0])
 
 
@@ -90,9 +89,9 @@ class MazeSolver:
         for node in self.path:
             self.solution[node] = [0,0,1]
 
-    def printSolvedMaze(self):
+    def SolveMaze(self):
         '''
         Prints the solution as image
         '''
+        self.findShortestPath()
         self.colorPath()
-        plt.imshow(self.solution)
